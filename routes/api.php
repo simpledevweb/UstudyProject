@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PostController;
 
 
-Route::get('posts', [PostController::class, 'post']);
+
+Route::prefix('core/v1')->group(base_path('routes/core/api_v1.php'));   // 1 - version control
