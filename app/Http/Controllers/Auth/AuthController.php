@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AuthController extends Controller
 {
@@ -30,6 +31,15 @@ class AuthController extends Controller
         } catch (ModelNotFoundException $e) {
             throw new ModelNotFoundException("User not found");
         }
+    }
+
+    public function logout(): JsonResponse
+    {
+        auth()->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'message' => "Logout successful"
+        ]);
     }
 
 }
