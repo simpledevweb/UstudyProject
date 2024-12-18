@@ -1,9 +1,11 @@
 <?php
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Auth\AuthenticationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -25,7 +27,7 @@ return Application::configure(basePath: dirname(__DIR__))
             ], 401);
         });
 
-        $exceptions->render(function (AuthenticationException $e) {
+        $exceptions->render(function (AuthorizationException $e) {
             return response([
                 'status' => 403,
                 'message' => $e->getMessage(),
@@ -36,7 +38,7 @@ return Application::configure(basePath: dirname(__DIR__))
             return response()->json([
                 'status' => $e->getStatusCode(),
                 'message' => $e->getMessage()
-            ], $ex->getStatusCode());
+            ], $e->getStatusCode());
         });
 
         $exceptions->render(function (\Throwable $e) {
