@@ -4,11 +4,10 @@ namespace App\Http\Requests\Traits;
 
 use App\Exceptions\ApiValidationException;
 use Illuminate\Contracts\Validation\Validator;
-use Override;
 
 trait FailedValidation
 {
-    
+
     /**
      * Handle a failed validation attempt.
      *
@@ -17,7 +16,7 @@ trait FailedValidation
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    #[Override]    
+    #[\Override]
     /**
      * Summary of failedValidation
      * @param \Illuminate\Contracts\Validation\Validator $validator
