@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Post;
+use App\Models\Tag;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,7 +22,32 @@ class DatabaseSeeder extends Seeder
             'password' => 12345678,
         ])->point()->create();
 
-        User::factory(10)->create()->map(fn($user) => $user->point()->create());
-        Post::factory(500)->create();
+        User::factory(10)->create()->map(fn($user) => $user->point()->create([
+            'points' => rand(1,50),
+            'all_points'=> rand(51,500),
+        ]));
+        
+        $posts = Post::factory(500)->create();
+
+        Tag::insert([
+            ['name' => 'Laravel', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Php', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Docker', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Sanctum', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Telescope', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Laracast', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Linux', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Golang', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Composer', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Devops', 'created_at' => now(), 'updated_at' => now()],
+        ]);
+        
+        $tags = Tag::all();
+
+        $posts->each(function ($post) use ($tags) {
+            $post->tags()->attach(
+                $tags->random(2)->pluck('id')->toArray()
+            );
+        });
     }
 }
