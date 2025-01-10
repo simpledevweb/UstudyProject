@@ -20,6 +20,7 @@ return new class extends Migration
             $table->bigInteger('shared')->default(0);
             $table->boolean('recommended')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
