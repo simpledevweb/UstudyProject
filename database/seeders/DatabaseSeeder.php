@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Country;
 use App\Models\Post;
+use App\Models\Profile;
 use App\Models\Tag;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -22,7 +24,7 @@ class DatabaseSeeder extends Seeder
             'password' => 12345678,
         ])->point()->create();
 
-        User::factory(10)->create()->map(fn($user) => $user->point()->create([
+        $users = User::factory(10)->create()->map(fn($user) => $user->point()->create([
             'points' => rand(1,50),
             'all_points'=> rand(51,500),
         ]));
@@ -49,5 +51,18 @@ class DatabaseSeeder extends Seeder
                 $tags->random(2)->pluck('id')->toArray()
             );
         });
+
+        Country::insert([
+            ['name' => 'Uzbekistan', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Kazakistan', 'created_at' => now(), 'updated_at' => now()]
+        ]);
+
+        $country = Country::all(); 
+
+        Profile::insert([
+            ['country_id' => $country[0]['id'], 'user_id' => $users[0]['id'], 'address' => 'Uzbekistan', 'created_at' => now(), 'updated_at' => now()],
+            ['country_id' => $country[1]['id'], 'user_id' => $users[1]['id'], 'address' => 'Uzbekistan', 'created_at' => now(), 'updated_at' => now()],
+        ]);
+
     }
 }
