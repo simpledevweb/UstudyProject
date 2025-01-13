@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Country extends Model
@@ -27,6 +28,18 @@ class Country extends Model
             'id',
             'id',
             'user_id'
+        );
+    }
+
+    public function posts(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Post::class,
+            User::class,
+            'country_id',
+            'user_id',
+            'id',
+            'id'
         );
     }
 }

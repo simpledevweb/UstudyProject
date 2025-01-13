@@ -17,8 +17,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        Country::insert([
+            ['name' => 'Uzbekistan', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Kazakistan', 'created_at' => now(), 'updated_at' => now()]
+        ]);
 
         User::factory()->create([
+            'country_id' => Country::find(1)->id,
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password' => 12345678,
@@ -29,7 +34,7 @@ class DatabaseSeeder extends Seeder
             'all_points'=> rand(51,500),
         ]));
         
-        $posts = Post::factory(500)->create();
+        $posts = Post::factory(100)->create();
 
         Tag::insert([
             ['name' => 'Laravel', 'created_at' => now(), 'updated_at' => now()],
@@ -51,11 +56,6 @@ class DatabaseSeeder extends Seeder
                 $tags->random(2)->pluck('id')->toArray()
             );
         });
-
-        Country::insert([
-            ['name' => 'Uzbekistan', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Kazakistan', 'created_at' => now(), 'updated_at' => now()]
-        ]);
 
         $country = Country::all(); 
 
