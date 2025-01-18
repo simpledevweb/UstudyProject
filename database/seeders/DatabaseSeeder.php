@@ -29,10 +29,19 @@ class DatabaseSeeder extends Seeder
             'password' => 12345678,
         ])->point()->create();
 
-        $users = User::factory(10)->create()->map(fn($user) => $user->point()->create([
+        $users = User::factory(10)->create();
+        $users->map(fn($user) => $user->point()->create([
             'points' => rand(1,50),
             'all_points'=> rand(51,500),
         ]));
+
+        $users[0]->computer()->create(['model' => 'Hp 255G7']);
+        $users[1]->computer()->create(['model' => 'Acer']);
+        $users[2]->computer()->create(['model' => 'Victus']);
+
+        $users[3]->phone()->create(['number' => '12-2321']);
+        $users[4]->phone()->create(['number' => '41-4124']);
+        $users[5]->phone()->create(['number' => '51-1515']);
         
         $posts = Post::factory(100)->create();
 
