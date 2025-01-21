@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Tag extends Model
 {
@@ -20,6 +21,17 @@ class Tag extends Model
 
     public function posts(): BelongsToMany
     {
-        return $this->belongsToMany(Tag::class, 'post_tag', 'tag_id', 'post_id', 'id', 'id');
+        return $this->belongsToMany(Tag::class, table: 'post_tag', foreignPivotKey: 'tag_id', relatedPivotKey: 'post_id', parentKey: 'id', relatedKey: 'id');
+    }
+
+    public function mposts(): MorphToMany
+    {
+        return $this->morphedByMany(Post::class, 'taggable');
+    }
+
+
+    public function videos(): MorphToMany
+    {
+        return $this->morphedByMany(Video::class, 'taggable');
     }
 }

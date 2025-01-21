@@ -67,12 +67,15 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $tags = Tag::all();
+
         //Pivot table tagpost
         $posts->each(function ($post) use ($tags) {
             $post->tags()->attach(
                 $tags->random(2)->pluck('id')->toArray()
             );
         });
+
+      
 
         $country = Country::all();
 
@@ -91,6 +94,33 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $video = Video::all();
+
+        //Pivvot Taggable
+        $posts[0]->mtags()->attach([
+            'tag_id' => $tags[0]
+        ]);
+        $posts[0]->mtags()->attach([
+            'tag_id' => $tags[1]
+        ]);
+        $posts[0]->mtags()->attach([
+            'tag_id' => $tags[2]
+        ]);
+        $posts[1]->mtags()->attach([
+            'tag_id' => $tags[3]
+        ]);
+
+        $video[0]->tags()->attach([
+            'tag_id' => $tags[6]
+        ]);
+        $video[0]->tags()->attach([
+            'tag_id' => $tags[7]
+        ]);
+        $video[0]->tags()->attach([
+            'tag_id' => $tags[8]
+        ]);
+        $video[1]->tags()->attach([
+            'tag_id' => $tags[9]
+        ]);
 
         //Comment
         $video[0]->comments()->create(
