@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Actions\Core\v1\Auth\LoginAction;
 use App\Actions\Core\v1\Auth\LogoutAction;
 use App\Actions\Core\v1\Auth\RefreshTokenAction;
+use App\Actions\Core\v1\Auth\RegistrationAction;
 use App\Dto\Core\v1\Auth\LoginDto;
+use App\Dto\Core\v1\Auth\RegistrationDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Core\v1\Auth\LoginRequest;
+use App\Http\Requests\Core\v1\Auth\RegistrationRequest;
 use Illuminate\Http\JsonResponse;
 class AuthController extends Controller
 {
@@ -30,6 +33,11 @@ class AuthController extends Controller
     public function refreshToken(RefreshTokenAction $action): JsonResponse
     {
         return $action();
+    }
+
+    public function signup(RegistrationAction $action, RegistrationRequest $request): JsonResponse
+    {
+        return $action(RegistrationDto::from($request));
     }
 
     /**
