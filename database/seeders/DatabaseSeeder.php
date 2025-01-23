@@ -4,11 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Country;
 use App\Models\Post;
-use App\Models\Profile;
 use App\Models\Tag;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Video;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -40,16 +37,7 @@ class DatabaseSeeder extends Seeder
             'all_points' => rand(51, 500),
         ]));
 
-        //Computer
-        $users[0]->computer()->create(['model' => 'Hp 255G7']);
-        $users[1]->computer()->create(['model' => 'Acer']);
-        $users[2]->computer()->create(['model' => 'Victus']);
-
-        //Phone
-        $users[3]->phone()->create(['number' => '12-2321']);
-        $users[4]->phone()->create(['number' => '41-4124']);
-        $users[5]->phone()->create(['number' => '51-1515']);
-
+        //Post
         $posts = Post::factory(100)->create();
 
         //Tag
@@ -75,77 +63,7 @@ class DatabaseSeeder extends Seeder
             );
         });
 
-      
-
-        $country = Country::all();
-
-        //Profile
-        Profile::insert([
-            ['country_id' => $country[0]['id'], 'user_id' => $users[0]['id'], 'address' => 'Uzbekistan', 'created_at' => now(), 'updated_at' => now()],
-            ['country_id' => $country[1]['id'], 'user_id' => $users[1]['id'], 'address' => 'Uzbekistan', 'created_at' => now(), 'updated_at' => now()],
-        ]);
-
-        //Video
-        Video::insert([
-            ['title' => 'Cracking the System', 'created_at' => now(), 'updated_at' => now()],
-            ['title' => 'Cyber Heist', 'created_at' => now(), 'updated_at' => now()],
-            ['title' => 'Behind the Code', 'created_at' => now(), 'updated_at' => now()],
-            ['title' => 'Hacking the Matrix', 'created_at' => now(), 'updated_at' => now()],
-        ]);
-
-        $video = Video::all();
-
-        //Pivvot Taggable
-        $posts[0]->mtags()->attach([
-            'tag_id' => $tags[0]
-        ]);
-        $posts[0]->mtags()->attach([
-            'tag_id' => $tags[1]
-        ]);
-        $posts[0]->mtags()->attach([
-            'tag_id' => $tags[2]
-        ]);
-        $posts[1]->mtags()->attach([
-            'tag_id' => $tags[3]
-        ]);
-
-        $video[0]->tags()->attach([
-            'tag_id' => $tags[6]
-        ]);
-        $video[0]->tags()->attach([
-            'tag_id' => $tags[7]
-        ]);
-        $video[0]->tags()->attach([
-            'tag_id' => $tags[8]
-        ]);
-        $video[1]->tags()->attach([
-            'tag_id' => $tags[9]
-        ]);
-
         //Comment
-        $video[0]->comments()->create(
-            [
-                'content' => 'Ever wondered what happens behind the keyboard? Dive into the world of hackers.',
-                'created_at' => now(),
-                'updated_at' => now()
-            ]
-        );
-
-        $video[0]->comments()->create(
-            [
-                'content' => 'From cyber heists to hacktivism – the untold stories of digital warriors.',
-                'created_at' => now(),
-                'updated_at' => now()
-            ]
-        );
-        $video[1]->comments()->create(
-            [
-                'content' => 'The fine line between genius and cybercriminal.',
-                'created_at' => now(),
-                'updated_at' => now()
-            ]
-        );
-
         $posts[0]->comments()->create(
             [
                 'content' => 'Discover how hackers rewrite the rules of the digital age.',
