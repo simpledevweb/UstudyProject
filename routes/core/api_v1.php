@@ -6,9 +6,14 @@ use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
+/* Pattern */
+Route::pattern('id', '\d+');
 
 /* Public */
-Route::get('posts', [PostController::class, 'post']);
+Route::prefix('posts')->group(function () {
+    Route::get('/', [PostController::class, 'post']);
+    Route::get('show/{id}', [PostController::class, 'show']);
+});
 
 /* Guest */
 Route::prefix('auth')->middleware('guest:sanctum')->group(function () {
