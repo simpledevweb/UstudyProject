@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Actions\Core\v1\Auth\GetMeAction;
 use App\Actions\Core\v1\Auth\LoginAction;
 use App\Actions\Core\v1\Auth\LogoutAction;
 use App\Actions\Core\v1\Auth\RefreshTokenAction;
@@ -35,9 +36,25 @@ class AuthController extends Controller
         return $action();
     }
 
+    /**
+     * Summary of signup
+     * @param \App\Actions\Core\v1\Auth\RegistrationAction $action
+     * @param \App\Http\Requests\Core\v1\Auth\RegistrationRequest $request
+     * @return JsonResponse
+     */
     public function signup(RegistrationAction $action, RegistrationRequest $request): JsonResponse
     {
         return $action(RegistrationDto::from($request));
+    }
+
+    /**
+     * Summary of me
+     * @param \App\Actions\Core\v1\Auth\GetMeAction $action
+     * @return JsonResponse
+     */
+    public function me(GetMeAction $action): JsonResponse
+    {
+        return $action();
     }
 
     /**
