@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\IsVerifiedEmail;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -20,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'abilities' => CheckAbilities::class,
             'ability' => CheckForAnyAbility::class,
+            'verified' => IsVerifiedEmail::class,
         ]);
 
         $middleware->group('api', middleware: [
