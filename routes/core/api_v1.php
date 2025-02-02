@@ -31,6 +31,7 @@ Route::prefix('auth')->middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum
 /* Auth for Access token*/
 Route::middleware(['auth:sanctum', 'ability:' . TokenAbilityEnum::ACCESS_TOKEN->value])->group(function () {
     Route::prefix('auth')->group(function () {
+        Route::get('me', [AuthController::class, 'me']);
         Route::post('logout', [AuthController::class, 'logout']);
         Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
     });
