@@ -3,7 +3,7 @@
 
 use App\Enums\TokenAbilityEnum;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\Auth\EmailVerificationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
@@ -20,7 +20,7 @@ Route::prefix('posts')->group(function () {
 Route::prefix('auth')->middleware('guest:sanctum')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('signup', [AuthController::class, 'signup']);
-    Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
+    Route::get('email/verify/{id}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
 });
 
 /* Auth for Refresh token*/
