@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\HasVerifiedPhone;
 use App\Http\Middleware\IsVerifiedEmail;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Application;
@@ -21,7 +22,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'abilities' => CheckAbilities::class,
             'ability' => CheckForAnyAbility::class,
-            'verified' => IsVerifiedEmail::class,
+            'verified_email' => IsVerifiedEmail::class,
+            'verified_phone' => HasVerifiedPhone::class
         ]);
 
         $middleware->group('api', middleware: [
