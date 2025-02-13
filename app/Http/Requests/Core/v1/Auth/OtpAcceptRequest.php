@@ -5,7 +5,7 @@ namespace App\Http\Requests\Core\v1\Auth;
 use App\Http\Requests\Traits\FailedValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class OtpAcceptRequest extends FormRequest
 {
     use FailedValidation;
     /**
@@ -17,16 +17,14 @@ class LoginRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * Summary of rules
+     * @return array{code: string, phone: string}
      */
     public function rules(): array
     {
         return [
-            // 'email' => 'required|string|email',
             'phone' => 'required|numeric|digits:12',
-            'password' => 'required|string|min:8',
+            'code' => 'required|numeric|digits:6'
         ];
     }
 }

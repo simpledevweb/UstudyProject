@@ -15,7 +15,11 @@ class LoginAction
     {
 
         try {
-            $user = User::where('email', $dto->email)->firstOrFail();
+            /** 
+             *  $user = User::where('email', $dto->email)->firstOrFail(); 
+             *  For email verification
+             * */
+            $user = User::where('phone', $dto->phone)->firstOrFail();
 
             if (!Hash::check($dto->password, $user->password)) {
                 throw new AuthenticationException();
