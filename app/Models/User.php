@@ -62,11 +62,15 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function point(): HasOne
     {
-        return $this->hasOne(UserPoint::class,'user_id', 'id');
+        return $this->hasOne(UserPoint::class, 'user_id', 'id');
     }
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class, 'country_id', 'id');
     }
 
+    public function hasVerifiedPhone(): bool
+    {
+        return (bool) $this->phone_verified_at;
+    }
 }
