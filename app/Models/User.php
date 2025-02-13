@@ -25,7 +25,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'country_id',
         'name',
         'email',
+        'phone',
         'password',
+        'email_verified_at',
+        'phone_verified_at'
     ];
 
     /**
@@ -47,6 +50,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return [
             'email_verified_at' => 'datetime',
+            'phone_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
     }

@@ -25,7 +25,10 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'country_id' => Country::find(1)->id,
             'name' => 'Test User',
-            'email' => 'test@example.com',
+            'email' => 'test@example.com',            
+            'email_verified_at' => now(),
+            'phone' => '998911234567',
+            'phone_verified_at' => now(),
             'password' => 12345678,
         ])->point()->create();
 

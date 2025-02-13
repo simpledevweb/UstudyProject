@@ -24,12 +24,12 @@ class IndexDto
     public static function from(IndexRequest $request): self
     {
         return new self(
-            perPage: $request->get('perpage'),
-            page: $request->get('page'),
-            search: $request->get('search'),
-            from: $request->get('from'),
-            to: $request->get('to'),
-            sort: $request->get('sort'),
+            perPage: $request->perpage,
+            page: $request->page,
+            search: $request->search,
+            from: $request->from,
+            to: $request->to,
+            sort: $request->sort,
         );
     }
 }
