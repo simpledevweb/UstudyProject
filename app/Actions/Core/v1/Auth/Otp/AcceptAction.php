@@ -37,7 +37,8 @@ class AcceptAction
 
         $data['phone_verified_at'] = now();
         $user = User::create($data);
-
+        $user->assignRole('user');
+        
         Cache::forget('user_' . $dto->phone);
         Cache::forget('otp_verification_' . $user->phone);
 

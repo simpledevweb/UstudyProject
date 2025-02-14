@@ -21,25 +21,16 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Kazakistan', 'created_at' => now(), 'updated_at' => now()]
         ]);
 
-        //User
-        User::factory()->create([
-            'country_id' => Country::find(1)->id,
-            'name' => 'Test User',
-            'email' => 'test@example.com',            
-            'email_verified_at' => now(),
-            'phone' => '998911234567',
-            'phone_verified_at' => now(),
-            'password' => 12345678,
-        ])->point()->create();
+        $this->call(UserPermissionSeeder::class);
 
-        $users = User::factory(10)->create();
+        $users = User::all();
 
         //Userpoint
         $users->map(fn($user) => $user->point()->create([
             'points' => rand(1, 50),
             'all_points' => rand(51, 500),
         ]));
-
+        
         //Post
         $posts = Post::factory(100)->create();
 
@@ -88,5 +79,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now()
             ]
         );
+
+       
     }
 }
