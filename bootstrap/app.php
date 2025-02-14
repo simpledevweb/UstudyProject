@@ -10,7 +10,9 @@ use Illuminate\Auth\AuthenticationException;
 use Laravel\Sanctum\Http\Middleware\CheckAbilities;
 use Laravel\Sanctum\Http\Middleware\CheckForAnyAbility;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-
+use Spatie\Permission\Middleware\RoleMiddleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__ . '/../routes/web.php',
@@ -23,7 +25,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'abilities' => CheckAbilities::class,
             'ability' => CheckForAnyAbility::class,
             'verified_email' => IsVerifiedEmail::class,
-            'verified_phone' => HasVerifiedPhone::class
+            'verified_phone' => HasVerifiedPhone::class,
+            'role' => RoleMiddleware::class,
+            'permission' => PermissionMiddleware::class,
+            'role_or_permission' => RoleOrPermissionMiddleware::class,
         ]);
 
         $middleware->group('api', middleware: [
