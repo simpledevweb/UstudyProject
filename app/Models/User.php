@@ -41,6 +41,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'remember_token',
     ];
+    /**
+     * Summary of appends
+     * @var array
+     */
+    protected $appends = [
+        'phone_format'
+    ];
 
     /**
      * Get the attributes that should be cast.
@@ -73,5 +80,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasVerifiedPhone(): bool
     {
         return (bool) $this->phone_verified_at;
+    }
+
+    public function getPhoneFormatAttribute(): string
+    {
+        $phone = $this->phone;
+
+        $phone = "+" . substr($phone, 0, 3) . "-" . substr($phone, 3, 2) . "-" . substr($phone, 5, 3) . "-" . substr($phone, 8, 2) . "-" . substr($phone, 10, 2);
+
+        return $phone;
     }
 }
