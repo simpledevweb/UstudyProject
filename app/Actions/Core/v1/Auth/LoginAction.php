@@ -5,12 +5,14 @@ namespace App\Actions\Core\v1\Auth;
 use App\Dto\Core\v1\Auth\LoginDto;
 use App\Enums\TokenAbilityEnum;
 use App\Models\User;
+use App\Traits\ResponseTrait;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\JsonResponse;
 class LoginAction
 {
+    use ResponseTrait;
     public function __invoke(LoginDto $dto): JsonResponse
     {
 
@@ -39,12 +41,15 @@ class LoginAction
                 abilities: [TokenAbilityEnum::ISSUE_ACCESS_TOKEN->value],
                 expiresAt: $refreshTokenExpiration
             );
-            return response()->json([
-                'access_token' => $accessToken->plainTextToken,
-                'refresh_token' => $refreshToken->plainTextToken,
-                'at_expired_at' => $accessTokenExpiration->format('Y-m-d H:i:s'),
-                'rf_expired_at' => $refreshTokenExpiration->format('Y-m-d H:i:s'),
-            ]);
+            return static::toResponse(
+                message: "Login successful",
+                data: [
+                    'access_token' => $accessToken->plainTextToken,
+                    'refresh_token' => $refreshToken->plainTextToken,
+                    'at_expired_at' => $accessTokenExpiration->format('Y-m-d H:i:s'),
+                    'rf_expired_at' => $refreshTokenExpiration->format('Y-m-d H:i:s'),
+                ]
+            );
         } catch (ModelNotFoundException $e) {
             throw new ModelNotFoundException("User not found");
         }

@@ -3,10 +3,13 @@
 namespace App\Actions\Core\v1\Auth;
 
 use App\Enums\TokenAbilityEnum;
+use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
 
 class RefreshTokenAction
 {
+    use ResponseTrait;
+
     public function __invoke(): JsonResponse
     {
         $accessTokenExpiration = now()->addMinutes(config('sanctum.at_expiration'));
@@ -15,9 +18,12 @@ class RefreshTokenAction
             abilities: [TokenAbilityEnum::ACCESS_TOKEN->value],
             expiresAt: $accessTokenExpiration
         );
-        return response()->json([
-            'access_token' => $accessToken->plainTextToken,
-            'at_expired_at' => $accessTokenExpiration->format('Y-m-d H:i:s'),
-        ]);
+        return static::toResponse(
+            message: "Token successfully refreshed",
+            data: [
+                'access_token' => $accessToken->plainTextToken,
+                'at_expired_at' => $accessTokenExpiration->format('Y-m-d H:i:s'),
+            ]
+        );
     }
 }
